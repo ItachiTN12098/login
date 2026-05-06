@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <title>Đăng nhập & Đăng ký - Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #535974, #7c7782);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .main-card {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    h2 { text-align: center; margin-bottom: 25px; font-weight: bold; color: #333; }
+
+    .form-control {
+      margin-bottom: 15px;
+      border-radius: 10px;
+      height: 45px;
+    }
+
+    .btn-main {
+      width: 100%;
+      border-radius: 20px;
+      background: #6c5ce7;
+      color: white;
+      height: 45px;
+      font-size: 16px;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btn-main:hover { background: #5849c4; color: white; }
+
+    .switch {
+      text-align: center;
+      margin-top: 15px;
+      cursor: pointer;
+      color: #6c5ce7;
+      font-weight: 500;
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      text-decoration: none;
+      color: #999;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+    .back-home:hover { color: #6c5ce7; }
+
+    .hidden { display: none; }
+
+    #message {
+      text-align: center;
+      margin-bottom: 15px;
+      font-weight: bold;
+      min-height: 20px;
+    }
+    .success { color: #2ecc71; }
+    .error { color: #e74c3c; }
+
+    /* Dòng lưu ý thiết kế */
+    .note-box {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      color: #856404;
+      font-size: 12px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="main-card">
+  <div id="message"></div>
+
+  <!-- FORM ĐĂNG NHẬP -->
+  <div id="login-form">
+    <h2>Đăng nhập</h2>
+    <input id="login-user" type="text" class="form-control" placeholder="Email hoặc SĐT">
+    <input id="login-pass" type="password" class="form-control" placeholder="Mật khẩu">
+    <button class="btn btn-main" onclick="login()">Đăng nhập</button>
+    <div class="switch" onclick="showRegister()">Chưa có tài khoản? Đăng ký</div>
+  </div>
+
+  <!-- FORM ĐĂNG KÝ -->
+  <div id="register-form" class="hidden">
+    <h2>Đăng ký</h2>
+    <input id="reg-user" type="text" class="form-control" placeholder="Email hoặc SĐT">
+    <input id="reg-pass" type="password" class="form-control" placeholder="Mật khẩu">
+    <button class="btn btn-main" onclick="register()">Đăng ký</button>
+    <div class="switch" onclick="showLogin()">Đã có tài khoản? Đăng nhập</div>
+  </div>
+
+  <!-- Nút quay lại trang chủ -->
+  <a href="https://itachitn12098.github.io/tranggt/" class="back-home">← Quay lại trang chủ</a>
+
+  <!-- Dòng thông báo lưu ý -->
+  <div class="note-box">
+    <strong>Lưu ý:</strong> Đây là bài tập thiết kế Web được thực hiện theo yêu cầu của môn học, nên bạn không thích đăng ký hoặc  đăng ký vẫn vào được wed ở nút quay lại trang chủ !
+  </div>
+</div>
+
+<script>
+let savedUser = "admin";
+let savedPass = "123456";
+
+function showRegister() {
+  clearMsg();
+  document.getElementById("login-form").classList.add("hidden");
+  document.getElementById("register-form").classList.remove("hidden");
+}
+
+function showLogin() {
+  clearMsg();
+  document.getElementById("register-form").classList.add("hidden");
+  document.getElementById("login-form").classList.remove("hidden");
+}
+
+function register() {
+  let user = document.getElementById("reg-user").value;
+  let pass = document.getElementById("reg-pass").value;
+
+  if(user === "" || pass === "") {
+    showMsg("Vui lòng nhập đầy đủ thông tin", "error");
+    return;
+  }
+
+  savedUser = user;
+  savedPass = pass;
+  showMsg("Đăng ký thành công!", "success");
+  setTimeout(() => { showLogin(); }, 1000);
+}
+
+function login() {
+  let user = document.getElementById("login-user").value;
+  let pass = document.getElementById("login-pass").value;
+
+  if(user === savedUser && pass === savedPass) {
+    showMsg("Đăng nhập thành công! Đang chuyển hướng...", "success");
+    setTimeout(() => { 
+      window.location.href = "https://itachitn12098.github.io/tranggt/"; 
+    }, 1000);
+  } else {
+    showMsg("Sai tài khoản hoặc mật khẩu!", "error");
+  }
+}
+
+function showMsg(text, type) {
+  let msg = document.getElementById("message");
+  msg.innerText = text;
+  msg.className = type;
+}
+
+function clearMsg() {
+  document.getElementById("message").innerText = "";
+}
+</script>
+
+</body>
+</html>
